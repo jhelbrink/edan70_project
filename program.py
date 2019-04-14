@@ -58,7 +58,6 @@ with bz2.open('latest-all.json.bz2', "rt") as bzinput:
                 print('DUMP PERSONS!')
                 json.dump(person_data, fp)
                 person_data = []
-
         if len(job_data) > 1000:
             filename = 'job_data/job_dump' + str(job_dump_iteration) + '.json'
             job_dump_iteration = job_dump_iteration + 1
@@ -66,7 +65,6 @@ with bz2.open('latest-all.json.bz2', "rt") as bzinput:
                 print('DUMP JOBS!')
                 json.dump(job_data, fp)
                 job_data = []
-
     print(len(person_data))
     print(len(job_data))
     #print(person_data[0]['sitelinks'])
