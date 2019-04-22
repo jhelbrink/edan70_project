@@ -1,1 +1,79 @@
-[{"name": "Jean-Michel Atlan", "jobs": ["Q1028181"], "first_paragraph": "Jean-Michel Atlan, född 23 januari 1913, död 12 februari 1960, var en fransk konstnär.", "id": "Q689646"}, {"name": "Rodrigo Barrera", "jobs": ["Q937857", "Q628099"], "first_paragraph": "Rodrigo Barrera, född 30 maj 1970, är en chilensk före detta professionell fotbollsspelare. Barrera spelade största delen av sin karriär för Santiago-klubben Universidad de Chile. Sammanlagt blev det också 22 matcher för det chilenska landslaget (5 mål) och han var en del av laget då man deltog i VM 1998. Han avslutade sin spelarkarriär 2006.", "id": "Q672081"}, {"name": "Hayden Panettiere", "jobs": ["Q177220", "Q2405480", "Q639669", "Q2259451", "Q10800557", "Q10798782", "Q4610556", "Q753110", "Q33999", "Q17504942"], "first_paragraph": "Hayden Leslie Panettiere, född 21 augusti 1989 i Palisades, Rockland County, New York, är en amerikansk skådespelare och sångare. Hon är främst känd för sin roll som Claire Bennet i TV-serien Heroes samt Janine B Atch i Step up to the streets 2. Hon är vegetarian och engagerad i djurskyddsaktiviteter internationellt.", "id": "Q171571"}, {"name": "Helene von Druskowitz", "jobs": ["Q482980", "Q4964182", "Q4263842", "Q36180"], "first_paragraph": "Helene von Druskowitz, född 2 maj 1856 i Wien under namnet Helena Maria Druschkovich, död 31 maj 1918 i Mauer-\u00d6hling, \u00d6sterrike, var en österrikisk filosof, författare, dramatiker, musikkritiker och feminist som disputerade 1878 som en av de första kvinnorna i Europa. Mycket av hennes texter publicerades under manligt alias på grund av den utbredda sexism som rådde. ", "id": "Q86525"}, {"name": "Hjalmar Mäe", "jobs": ["Q82955"], "first_paragraph": "Hjalmar Mäe, född 24 oktober 1901 i Tuhala, Harjumaa, Estland, Tsarryssland, död 10 april 1978 i Graz, \u00d6sterrike, var en estländsk politiker som kollaborerade med Nazityskland under andra världskriget. Från december 1941 till januari 1945 var Mäe ledare för den estniska självadministrationen som var underordnad det nazityska Reichskommissariat Ostland.", "id": "Q571713"}, {"name": "Peng Zhen", "jobs": ["Q82955"], "first_paragraph": "Peng Zhen, ursprungligen Fu Maogong (\u5085\u8302\u516c), född 12 oktober 1902 i Quwo, Shanxi, död 26 april 1997 i Peking, var en kinesisk kommunistisk politiker. Han var borgmästare i Peking och senare ordförande i Nationella folkkongressen. Han var den förste medlemmen av politbyrån, som förödmjukades offentligt när kulturrevolutionen bröt ut i Folkrepubliken Kina 1966. ", "id": "Q472527"}, {"name": "Tammy Baldwin", "jobs": ["Q82955", "Q40348"], "first_paragraph": "Tammy Suzanne Green Baldwin, född 11 februari 1962 i Madison, Wisconsin, är en amerikansk demokratisk politiker. Hon representerar delstaten Wisconsin i USA:s senat sedan 2013. Hon representerade Wisconsins andra distrikt i USA:s representanthus 1999\u20132013. ", "id": "Q40628"}, {"name": "Anders Retzius", "jobs": ["Q864503", "Q4773904", "Q1622272", "Q10872101"], "first_paragraph": "Anders Adolph Retzius, född 13 oktober 1796 i Lund, död 18 april 1860 i Stockholm, var en svensk anatom och etnograf. Retzius grundade en kraniesamling på Karolinska institutet, och uppfann skallindex, varigenom han kom att spela en avgörande roll för rasbiologins framväxt. Läkaren Gustaf Retzius, som gick i hans fotspår, var hans son. ", "id": "Q490699"}, {"name": "Gregorius IV", "jobs": ["Q2259532", "Q250867"], "first_paragraph": "Gregorius IV, född okänt i Rom, död där 25 januari 844, var påve från slutet av år 827 till sin död 25 januari 844.", "id": "Q167052"}, {"name": "Karin Th\u00fcrig", "jobs": ["Q2309784", "Q15306067"], "first_paragraph": "Karin Th\u00fcrig, född 4 juli 1972 i Rothenburg, är en schweizisk triatlet och cyklist på både bana och på landsväg. Som professionell tävlingscyklist kör hon för det kanadensiska stallet Cerv\u00e9lo Lifeforce Pro Cycling Team.", "id": "Q241718"}, {"name": "Maria Elisabeth av \u00d6sterrike", "jobs": ["Q82955"], "first_paragraph": "Maria Elisabeth av \u00d6sterrike, född i Linz, 13 februari 1680, död på Mariemont vid Morlanwelz 26 augusti 1741, var ståthållare över \u00d6sterrikiska Nederländerna (1724-1741).", "id": "Q78598"}]
+[
+  {
+    "name": "Jean-Michel Atlan",
+    "jobs": ["Q1028181"],
+    "first_paragraph": "Jean-Michel Atlan, född 23 januari 1913, död 12 februari 1960, var en fransk konstnär.",
+    "id": "Q689646"
+  },
+  {
+    "name": "Rodrigo Barrera",
+    "jobs": ["Q937857", "Q628099"],
+    "first_paragraph": "Rodrigo Barrera, född 30 maj 1970, är en chilensk före detta professionell fotbollsspelare. Barrera spelade största delen av sin karriär för Santiago-klubben Universidad de Chile. Sammanlagt blev det också 22 matcher för det chilenska landslaget (5 mål) och han var en del av laget då man deltog i VM 1998. Han avslutade sin spelarkarriär 2006.",
+    "id": "Q672081"
+  },
+  {
+    "name": "Hayden Panettiere",
+    "jobs": [
+      "Q177220",
+      "Q2405480",
+      "Q639669",
+      "Q2259451",
+      "Q10800557",
+      "Q10798782",
+      "Q4610556",
+      "Q753110",
+      "Q33999",
+      "Q17504942"
+    ],
+    "first_paragraph": "Hayden Leslie Panettiere, född 21 augusti 1989 i Palisades, Rockland County, New York, är en amerikansk skådespelare och sångare. Hon är främst känd för sin roll som Claire Bennet i TV-serien Heroes samt Janine B Atch i Step up to the streets 2. Hon är vegetarian och engagerad i djurskyddsaktiviteter internationellt.",
+    "id": "Q171571"
+  },
+  {
+    "name": "Helene von Druskowitz",
+    "jobs": ["Q482980", "Q4964182", "Q4263842", "Q36180"],
+    "first_paragraph": "Helene von Druskowitz, född 2 maj 1856 i Wien under namnet Helena Maria Druschkovich, död 31 maj 1918 i Mauer-\u00d6hling, \u00d6sterrike, var en österrikisk filosof, författare, dramatiker, musikkritiker och feminist som disputerade 1878 som en av de första kvinnorna i Europa. Mycket av hennes texter publicerades under manligt alias på grund av den utbredda sexism som rådde. ",
+    "id": "Q86525"
+  },
+  {
+    "name": "Hjalmar Mäe",
+    "jobs": ["Q82955"],
+    "first_paragraph": "Hjalmar Mäe, född 24 oktober 1901 i Tuhala, Harjumaa, Estland, Tsarryssland, död 10 april 1978 i Graz, \u00d6sterrike, var en estländsk politiker som kollaborerade med Nazityskland under andra världskriget. Från december 1941 till januari 1945 var Mäe ledare för den estniska självadministrationen som var underordnad det nazityska Reichskommissariat Ostland.",
+    "id": "Q571713"
+  },
+  {
+    "name": "Peng Zhen",
+    "jobs": ["Q82955"],
+    "first_paragraph": "Peng Zhen, ursprungligen Fu Maogong (\u5085\u8302\u516c), född 12 oktober 1902 i Quwo, Shanxi, död 26 april 1997 i Peking, var en kinesisk kommunistisk politiker. Han var borgmästare i Peking och senare ordförande i Nationella folkkongressen. Han var den förste medlemmen av politbyrån, som förödmjukades offentligt när kulturrevolutionen bröt ut i Folkrepubliken Kina 1966. ",
+    "id": "Q472527"
+  },
+  {
+    "name": "Tammy Baldwin",
+    "jobs": ["Q82955", "Q40348"],
+    "first_paragraph": "Tammy Suzanne Green Baldwin, född 11 februari 1962 i Madison, Wisconsin, är en amerikansk demokratisk politiker. Hon representerar delstaten Wisconsin i USA:s senat sedan 2013. Hon representerade Wisconsins andra distrikt i USA:s representanthus 1999\u20132013. ",
+    "id": "Q40628"
+  },
+  {
+    "name": "Anders Retzius",
+    "jobs": ["Q864503", "Q4773904", "Q1622272", "Q10872101"],
+    "first_paragraph": "Anders Adolph Retzius, född 13 oktober 1796 i Lund, död 18 april 1860 i Stockholm, var en svensk anatom och etnograf. Retzius grundade en kraniesamling på Karolinska institutet, och uppfann skallindex, varigenom han kom att spela en avgörande roll för rasbiologins framväxt. Läkaren Gustaf Retzius, som gick i hans fotspår, var hans son. ",
+    "id": "Q490699"
+  },
+  {
+    "name": "Gregorius IV",
+    "jobs": ["Q2259532", "Q250867"],
+    "first_paragraph": "Gregorius IV, född okänt i Rom, död där 25 januari 844, var påve från slutet av år 827 till sin död 25 januari 844.",
+    "id": "Q167052"
+  },
+  {
+    "name": "Karin Th\u00fcrig",
+    "jobs": ["Q2309784", "Q15306067"],
+    "first_paragraph": "Karin Th\u00fcrig, född 4 juli 1972 i Rothenburg, är en schweizisk triatlet och cyklist på både bana och på landsväg. Som professionell tävlingscyklist kör hon för det kanadensiska stallet Cerv\u00e9lo Lifeforce Pro Cycling Team.",
+    "id": "Q241718"
+  },
+  {
+    "name": "Maria Elisabeth av \u00d6sterrike",
+    "jobs": ["Q82955"],
+    "first_paragraph": "Maria Elisabeth av \u00d6sterrike, född i Linz, 13 februari 1680, död på Mariemont vid Morlanwelz 26 augusti 1741, var ståthållare över \u00d6sterrikiska Nederländerna (1724-1741).",
+    "id": "Q78598"
+  }
+]
