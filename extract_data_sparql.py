@@ -23,7 +23,7 @@ WHERE
 	; wdt:P106 ?occupation .
 }
 
-LIMIT 1000000'''
+LIMIT 2000000'''
 
 
 url = 'https://query.wikidata.org/bigdata/namespace/wdq/sparql'
@@ -53,3 +53,4 @@ for a in profession:
 
 with open('person_dump.json', 'w') as fp:
     json.dump(unique_persons, fp)
+
