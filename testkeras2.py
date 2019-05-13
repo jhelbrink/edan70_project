@@ -1,84 +1,56 @@
 import os
 import json
+import pandas as pd
 from keras import preprocessing
-from keras.models import Sequential
-from keras.layers import Flatten, Dense, Embedding
+from keras.models import Sequential, Model
+from keras.layers import *
+from keras.optimizers import *
 from keras.datasets import imdb
 from numpy import array
+from keras.utils.np_utils import to_categorical
+import pickle
 
-max_features = 10000
-maxlen = 20
+nr_of_features = 59190
+maxlen = 50
+input_shape = (43716, 1026)
 
 ## The job we are building our model for
 job_to_test = 'Q81096'
 
-x = []
-#y = []
+x = pickle.load( open( "./good_stuff/x.p", "rb" ) ) #(43716, 50)
+print(x)
+y = pickle.load( open( "./good_stuff/y.p", "rb" ) ) #(43716,)
+y_multi = pickle.load( open( "./good_stuff/y_multi.p", "rb" ) )
+print(len(y_multi))
 
-## y for job to test, either 1 or 0
-y_test = []
+#x = x.reshape(1, 43716, 1026)
 
-## DICT for word usage
-word_list = {}
+class_list = {}
+classes_sorted = []
 
-## EXTRACT WORDS AND COUNT HOW OFTEN THEY ARE USED
-for filename in os.listdir('person_data2'):
-    with open('person_data2/' + filename) as f:
-        data = json.load(f)
-        for person in data:
-            words = person['first_paragraph'].split(' ')
-            for word in words:
-                if word in word_list:
-                    word_list[word] = word_list[word] + 1
-                else:
-                    word_list[word] = 1
-
-## THIS IS JUST FOR THE TEST CASE IN THE BOTTOM
-sentence = 'Sir Timothy John "Tim" Berners-Lee, KBE, FRS, född 8 juni 1955 i London i England, är skaparen av World Wide Web, en teknik som skapade förutsättningar för en bredare användning av Internet, och chef för World Wide Web Consortium.'
-for word in sentence:
-    if word in word_list:
-        word_list[word] = word_list[word] + 1
+for c in y_multi:
+    if c in class_list:
+        class_list[c] = class_list[c] + 1
     else:
-        word_list[word] = 1
+        class_list[c] = 1
+classes_sorted = list(reversed(sorted(class_list.items(), key=lambda item: item[1])))
+print(max(classes_sorted))
+
+for i, word in enumerate(classes_sorted):
+    classes_sorted[i] = word[0]
+
+for i, c in enumerate(y_multi):
+    y_multi[i] = classes_sorted.index(c)
+#print(y_multi)
+print(max(y_multi))
+y_multi = to_categorical(y_multi)
 
 
-common_words = list(reversed(sorted(word_list.items(), key=lambda item: item[1])))
-for i, word in enumerate(common_words):
-    common_words[i] = word[0]
-
-#Push to x and y
-for filename in os.listdir('person_data2'):
-    with open('person_data2/' + filename) as f:
-        data = json.load(f)
-        for person in data:
-            isJob = False
-            words = person['first_paragraph'].split(' ')
-            x_word = []
-            for word in words:
-                x_word.append(common_words.index(word))
-            for job in person['jobs']:
-                x.append(x_word)
-                y.append(job)
-                if(job==job_to_test):
-                    isJob = True
-                if(isJob):
-                    y_test.append(1)
-                else:
-                    y_test.append(0)
-
-x = array(x)
-y_test = array(y_test)
-print(x[0])
-print(y[0])
-print(max(x))
-print(len(y))
-
-print('padding')
-x = preprocessing.sequence.pad_sequences(x, maxlen=maxlen)
-
+##FIRST TEST WE SHOWED PIERRE
+"""
 print('Adding embedd')
 model = Sequential()
-model.add(Embedding(200000, 8, input_length=maxlen))
+model.add(Embedding(200000, 8, input_length=maxlen)) #Embedds the word for a vector representation.
 
 print('Adding Flatten')
 model.add(Flatten())
@@ -88,17 +60,65 @@ model.add(Dense(1, activation='sigmoid'))
 
 print('Compiling')
 model.compile(optimizer="rmsprop", loss="binary_crossentropy", metrics=['acc'])
+"""
+
+
+## FEED FORWARD
+
+model = Sequential([
+Dense(100),
+Activation('relu'),
+Dense(1),
+Activation('sigmoid')
+])
+
+model.compile(loss='binary_crossentropy', optimizer="rmsprop", metrics=['accuracy'])
+
+## LSTM
+"""
+model = Sequential()
+model.add(Embedding(60000, 8, input_length=maxlen))
+model.add(LSTM(100))
+model.add(Dense(1, activation='sigmoid'))
+model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['accuracy'])
+print(model.summary())
+"""
+
+"""
+## FEED FORWARD MULTI CLASS, FAILED
+model = Sequential([
+Dense(500, input_shape=(43716,1026)),
+Activation('relu'),
+Dense(500),
+Activation('relu'),
+Dense(10),
+Activation('softmax')
+])
+optimizer = Adam(lr=0.001)
+
+model.compile(loss='categorical_crossentropy', optimizer="rmsprop", metrics=['accuracy'])
+"""
+"""
+## MULTI CLASS
+inputs = Input(shape=(50, ))
+embedding_layer = Embedding(59190,
+                            1026,
+                            input_length=50)(inputs)
+lay = Flatten()(embedding_layer)
+lay = Dense(32, activation='relu')(lay)
+
+predictions = Dense(1026, activation='softmax')(lay)
+model = Model(inputs=[inputs], outputs=predictions)
+model.compile(optimizer='adam',
+              loss='categorical_crossentropy',
+              metrics=['acc'])
+
+model.summary()
+"""
 
 print('Fitting')
-history = model.fit(x, y_test,
-epochs=4,
-batch_size=32,
+history = model.fit(x, y,
+epochs=20,
+batch_size=64,
+verbose=1,
 validation_split=0.2)
-
-sentence = 'Sir Timothy John "Tim" Berners-Lee, KBE, FRS, född 8 juni 1955 i London i England, är skaparen av World Wide Web, en teknik som skapade förutsättningar för en bredare användning av Internet, och chef för World Wide Web Consortium.'
-test = []
-for word in sentence:
-    if word in common_words:
-        test.append(common_words.index(word))
-test = array(test)
-print(model.predict(test))

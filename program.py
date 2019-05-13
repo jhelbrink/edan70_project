@@ -4,6 +4,7 @@ import os
 import json
 import requests
 import bz2
+
 """
 with bz2.open('latest-all.json.bz2', "rt") as bzinput:
     inObj = False #True if we are currently rendering an object
@@ -69,7 +70,7 @@ with bz2.open('latest-all.json.bz2', "rt") as bzinput:
     print(len(job_data))
     #print(person_data[0]['sitelinks'])
     print(person_data[0].keys())
-"""
+
 
 
 jobs = {''}
@@ -87,12 +88,11 @@ jobs = list(jobs)
 
 
 
-"""
 P21 = Vilket kön, Q6581072 = Kvinna
 P569 = Födelsedatum
 P19 = Födelseort
 P106 = Sysselsättning
-"""
+
 
 
 
@@ -126,3 +126,4 @@ for filename in os.listdir('svwiki'):
                                 persons = []
                 pass
     #it = it + 1
+"""
