@@ -1,6 +1,11 @@
 svwiki/
 person_data/
-
+good_stuff/
+person_data2/
+aclImdb/
+glove.6B/
 job_data/
+docria_test/
 latest-all.json
 latest-all.json.bz2
+pre_trained:glove:model.h5

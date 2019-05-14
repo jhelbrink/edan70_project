@@ -10,21 +10,23 @@ from numpy import array
 from keras.utils.np_utils import to_categorical
 import pickle
 
-nr_of_features = 59190
-maxlen = 50
-input_shape = (43716, 1026)
+maxlen = 80
 
 ## The job we are building our model for
 job_to_test = 'Q81096'
-
+"""
 x = pickle.load( open( "./good_stuff/x.p", "rb" ) ) #(43716, 50)
 print(x)
 y = pickle.load( open( "./good_stuff/y.p", "rb" ) ) #(43716,)
 y_multi = pickle.load( open( "./good_stuff/y_multi.p", "rb" ) )
 print(len(y_multi))
-
+"""
+x = pickle.load(open('./good_stuff/x_train.p', 'rb'))
+y_multi = pickle.load(open('./good_stuff/y_train.p', 'rb'))
+y_multi = to_categorical(y_multi)
+print(y_multi.shape)
 #x = x.reshape(1, 43716, 1026)
-
+"""
 class_list = {}
 classes_sorted = []
 
@@ -44,7 +46,7 @@ for i, c in enumerate(y_multi):
 #print(y_multi)
 print(max(y_multi))
 y_multi = to_categorical(y_multi)
-
+"""
 
 ##FIRST TEST WE SHOWED PIERRE
 """
@@ -64,7 +66,7 @@ model.compile(optimizer="rmsprop", loss="binary_crossentropy", metrics=['acc'])
 
 
 ## FEED FORWARD
-
+"""
 model = Sequential([
 Dense(100),
 Activation('relu'),
@@ -73,7 +75,7 @@ Activation('sigmoid')
 ])
 
 model.compile(loss='binary_crossentropy', optimizer="rmsprop", metrics=['accuracy'])
-
+"""
 ## LSTM
 """
 model = Sequential()
@@ -98,27 +100,23 @@ optimizer = Adam(lr=0.001)
 
 model.compile(loss='categorical_crossentropy', optimizer="rmsprop", metrics=['accuracy'])
 """
-"""
-## MULTI CLASS
-inputs = Input(shape=(50, ))
-embedding_layer = Embedding(59190,
-                            1026,
-                            input_length=50)(inputs)
-lay = Flatten()(embedding_layer)
-lay = Dense(32, activation='relu')(lay)
 
-predictions = Dense(1026, activation='softmax')(lay)
-model = Model(inputs=[inputs], outputs=predictions)
-model.compile(optimizer='adam',
-              loss='categorical_crossentropy',
-              metrics=['acc'])
+## MULTI CLASS
+#inputs = Input(shape=(80, ))
+model = Sequential()
+model.add(Embedding(25000, 100, input_length=80))
+model.add(Flatten())
+model.add(Dense(500, activation='relu'))
+model.add(Dense(4638, activation='softmax'))
 
 model.summary()
-"""
+model.compile(optimizer='rmsprop',
+loss='categorical_crossentropy',
+metrics=['acc'])
 
 print('Fitting')
-history = model.fit(x, y,
+history = model.fit(x, y_multi,
 epochs=20,
-batch_size=64,
+batch_size=5000,
 verbose=1,
 validation_split=0.2)

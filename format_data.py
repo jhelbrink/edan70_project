@@ -56,7 +56,7 @@ for filename in os.listdir('person_data2'):
             words = person['first_paragraph'].split(' ')
             x_word = []
             for word in words:
-                x_word.append(common_words.index(word))
+                x_word.append(word)
             for job in person['jobs']:
                 x.append(x_word)
                 y.append(job)
@@ -72,7 +72,7 @@ y_test = array(y_test)
 
 
 print('padding')
-x = preprocessing.sequence.pad_sequences(x, maxlen=maxlen)
+#x = preprocessing.sequence.pad_sequences(x, maxlen=maxlen)
 pickle.dump(x , open('./good_stuff/x.p', 'wb'))
 pickle.dump(y_test , open('./good_stuff/y.p', 'wb'))
 pickle.dump(y , open('./good_stuff/y_multi.p', 'wb'))
