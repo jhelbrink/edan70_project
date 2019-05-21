@@ -33,7 +33,7 @@ label_translate = {}
 
 ## EXTRACT WORDS AND COUNT HOW OFTEN THEY ARE USED
 for filename in os.listdir('person_data2'):
-    with open('person_data2/' + filename) as f:
+    with open('person_data2/' + filename, encoding="utf-8") as f:
         data = json.load(f)
         for person in data:
             jobs = person['jobs']

@@ -44,9 +44,9 @@ model.save_weights('./pre_trained_glove_model.h5')
 """
 inp = Input(shape=(maxlen,))
 x = Embedding(max_words, embedding_dim, weights=[embedding_matrix])(inp)
-x = Bidirectional(LSTM(20, return_sequences=True, dropout=0.1, recurrent_dropout=0.1))(x)
+x = Bidirectional(LSTM(60, return_sequences=True, dropout=0.25, recurrent_dropout=0.25))(x)
 x = GlobalMaxPool1D()(x)
-x = Dense(20, activation="relu")(x)
+x = Dense(60, activation="relu")(x)
 x = Dropout(0.1)(x)
 x = Dense(4636, activation="softmax")(x)
 
