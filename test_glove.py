@@ -5,19 +5,20 @@ from keras.models import Sequential
 from keras.models import Model
 from keras.layers import Embedding, Flatten, Dense, Input, LSTM, Dropout, Activation, Bidirectional, GlobalMaxPool1D
 from keras.utils.np_utils import to_categorical
+import json
 
 
 x_train = pickle.load(open('./good_stuff/x_train.p', 'rb'))
 y_train = pickle.load(open('./good_stuff/y_train.p', 'rb'))
-embedding_matrix = pickle.load(open('./good_stuff/embedding_matrix.p', 'rb'))
 
-#ENCODE
-y_train = to_categorical(y_train)
-print(y_train.shape)
+x_test = pickle.load(open('./good_stuff/x_test.p', 'rb'))
+y_test = pickle.load(open('./good_stuff/y_test.p', 'rb'))
+
+embedding_matrix = pickle.load(open('./good_stuff/embedding_matrix.p', 'rb'))
 
 embedding_dim = 100
 maxlen = 80
-max_words = 6500
+max_words = 10000
 
 
 """
@@ -40,6 +41,7 @@ batch_size=250)
 model.save_weights('./pre_trained_glove_model.h5')
 """
 
+"""
 inp = Input(shape=(maxlen,))
 x = Embedding(max_words, embedding_dim, weights=[embedding_matrix])(inp)
 x = Bidirectional(LSTM(20, return_sequences=True, dropout=0.1, recurrent_dropout=0.1))(x)
@@ -47,7 +49,53 @@ x = GlobalMaxPool1D()(x)
 x = Dense(20, activation="relu")(x)
 x = Dropout(0.1)(x)
 x = Dense(4636, activation="softmax")(x)
+
 model = Model(inputs=inp, outputs=x)
+"""
+"""
+print(y_train.shape)
+print(x_train.shape)
+model = Sequential()
+model.add(Embedding(max_words, 80, input_length=maxlen))
+model.add(Bidirectional(LSTM(80, return_sequences=True, dropout=0.25, recurrent_dropout=0.25)))
+model.add(GlobalMaxPool1D())
+model.add(Dense(80, activation="relu"))
+model.add(Dropout(0.25))
+model.add(Dense(y_train.shape[1], activation="softmax"))
+"""
+
+model = Sequential()
+model.add(Embedding(max_words, embedding_dim, weights=[embedding_matrix]))
+model.add(LSTM(64, return_sequences=True, dropout=0.25, recurrent_dropout=0.25))
+model.add(GlobalMaxPool1D())
+model.add(Dense(512, input_shape=(max_words,),activation='relu'))
+model.add(Dropout(0.5))
+model.add(Dense(y_train.shape[1], activation='softmax'))
+#model.layers[0].set_weights([embedding_matrix])
+#model.layers[0].trainable = False
+
+
+"""
+inp = Input(shape=(maxlen,))
+x = Embedding(max_words, embedding_dim, weights=[embedding_matrix])(inp)
+x = Bidirectional(LSTM(60, return_sequences=True, dropout=0.25, recurrent_dropout=0.25))(x)
+x = GlobalMaxPool1D()(x)
+x = Dense(60, activation="relu")(x)
+x = Dropout(0.1)(x)
+x = Dense(1371, activation="softmax")(x)
+
+model = Model(inputs=inp, outputs=x)
+
+model.layers[0].set_weights([embedding_matrix])
+model.layers[0].trainable = False
+"""
+
+
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, batch_size=100, epochs=3, validation_split=0.1);
-model.save_weights('./pre_trained_glove_model.h5')
+model.fit(x_train, y_train, batch_size=120, epochs=5, validation_split=0.15)
+
+model_json = model.to_json()
+with open("model_in_json.json", "w") as json_file:
+    json.dump(model_json, json_file)
+
+model.save_weights('./model_weights.h5')

@@ -9,3 +9,6 @@ docria_test/
 latest-all.json
 latest-all.json.bz2
 pre_trained:glove:model.h5
+glove.6B.100d.txt
+model_weights.h5
+model_in_json.json
