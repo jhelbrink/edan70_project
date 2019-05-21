@@ -11,10 +11,12 @@ labelencoder = LabelEncoder()
 glove_dir = './glove.6B'
 
 embedding_dim = 100
-maxlen = 80
-training_samples = 926796
-validation_samples = 231700
-max_words = 6500
+maxlen = 60
+#926796 complete
+training_samples = 100000
+#231700 complete
+validation_samples = 20000
+max_words = 10000
 
 texts = []
 labels = []
@@ -25,7 +27,7 @@ label_translate = {}
 
 ## EXTRACT WORDS AND COUNT HOW OFTEN THEY ARE USED
 for filename in os.listdir('person_data2'):
-    with open('person_data2/' + filename) as f:
+    with open('person_data2/' + filename, encoding="utf-8") as f:
         data = json.load(f)
         for person in data:
             jobs = person['jobs']

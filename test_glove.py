@@ -17,7 +17,7 @@ print(y_train.shape)
 
 embedding_dim = 100
 maxlen = 80
-max_words = 6500
+max_words = 15000
 
 
 """
@@ -42,12 +42,14 @@ model.save_weights('./pre_trained_glove_model.h5')
 
 inp = Input(shape=(maxlen,))
 x = Embedding(max_words, embedding_dim, weights=[embedding_matrix])(inp)
-x = Bidirectional(LSTM(20, return_sequences=True, dropout=0.1, recurrent_dropout=0.1))(x)
+x = Bidirectional(LSTM(60, return_sequences=True, dropout=0.25, recurrent_dropout=0.25))(x)
 x = GlobalMaxPool1D()(x)
-x = Dense(20, activation="relu")(x)
+x = Dense(60, activation="relu")(x)
 x = Dropout(0.1)(x)
-x = Dense(4636, activation="softmax")(x)
+x = Dense(4638, activation="softmax")(x)
 model = Model(inputs=inp, outputs=x)
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
-model.fit(x_train, y_train, batch_size=100, epochs=3, validation_split=0.1);
+model.summary()
+model.fit(x_train, y_train, batch_size=100, epochs=10, validation_split=0.1);
+
 model.save_weights('./pre_trained_glove_model.h5')
