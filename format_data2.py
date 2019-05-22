@@ -17,11 +17,11 @@ embedding_dim = 100
 maxlen = 80
 max_words = 10000
 
-train = 80000
-test = 20000
+train = 800000
+test = 200000
 
 nr_labels = 0 #CAN BE USED IF WE WANT TO HAVE A SPECIFIC AMOUNT OF LABELS
-nr_labels_to_have = 15 #NUMBER OF OCCURENCES OF OCCUPATION TO INCLUDE
+nr_labels_to_have = 50 #NUMBER OF OCCURENCES OF OCCUPATION TO INCLUDE
 
 texts = []
 labels = []
@@ -31,6 +31,8 @@ cur_label = 1
 
 label_translate = {}
 
+jobs_dict = {}
+
 ## EXTRACT WORDS AND COUNT HOW OFTEN THEY ARE USED
 for filename in os.listdir('person_data2'):
     with open('person_data2/' + filename, encoding="utf-8") as f:
@@ -38,25 +40,33 @@ for filename in os.listdir('person_data2'):
         for person in data:
             jobs = person['jobs']
             text = person['first_paragraph']
-            texts.append(text)
-            persons.append(person['name'])
-            labels.append(jobs)
+            to_many = False
+            for job in jobs:
+                if job in jobs_dict and not to_many:
+                    if jobs_dict[job] < 400:
+                        jobs_dict[job] = jobs_dict[job] + 1
+                    else:
+                        to_many = True
+                else:
+                    jobs_dict[job] = 1
+            if not to_many:
+                texts.append(text)
+                persons.append(person['name'])
+                labels.append(jobs)
 
-
-jobs = {}
 
 labels = labels[:(train+test)]
 texts = texts[:(train+test)]
-
+"""
 for jobs_in_label in labels:
     for job in jobs_in_label:
         if job in jobs:
             jobs[job] = jobs[job] + 1
         else:
             jobs[job] = 1
-
+"""
 # SORT LIST ON OCCURENCE
-jobs_list = set(list(reversed(sorted(jobs.items(), key=lambda item: item[1]))))
+jobs_list = set(list(reversed(sorted(jobs_dict.items(), key=lambda item: item[1]))))
 valid_labels = {}
 
 # CREATE LABELS TO USE
@@ -69,6 +79,18 @@ for i, label in enumerate(labels):
     for j, l in enumerate(label):
         if l not in valid_labels:
             labels[i][j] = 'other'
+
+other_count = 0
+for i, label in enumerate(labels):
+    for j, l in enumerate(label):
+        if other_count > 1500 and labels[i][j] == 'other':
+            del labels[i]
+            del texts[i]
+            del persons[i]
+            break
+        elif labels[i][j] == 'other':
+            other_count = other_count + 1
+            break
 
 
 labels = one_hot.fit_transform(labels)

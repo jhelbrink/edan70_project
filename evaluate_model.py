@@ -2,49 +2,25 @@ from keras.models import load_model
 from keras.models import model_from_json
 import json
 import pickle
+from plot_cf_matrix import plot_confusion_matrix
+from evaluate_f1 import evaluate_f1
+from most_frequent_labels import most_frequent_indices
 import numpy as np
-import itertools
 from sklearn.metrics import confusion_matrix
 from sklearn.metrics import accuracy_score
 import seaborn as sn
 import pandas as pd
 import matplotlib.pyplot as plt
 
-
-def plot_confusion_matrix(cm, classes,
-                          normalize=False,
-                          title='Confusion matrix',
-                          cmap=plt.cm.Blues):
-    """
-    This function prints and plots the confusion matrix.
-    Normalization can be applied by setting `normalize=True`.
-    """
-    if normalize:
-        cm = cm.astype('float') / cm.sum(axis=1)[:, np.newaxis]
-        print("Normalized confusion matrix")
-    else:
-        print('Confusion matrix, without normalization')
-
-    print(cm)
-
-    plt.imshow(cm, interpolation='nearest', cmap=cmap)
-    plt.title(title)
-    plt.colorbar()
-    tick_marks = np.arange(len(classes))
-    plt.xticks(tick_marks, classes, rotation=45)
-    plt.yticks(tick_marks, classes)
-
-    fmt = '.2f' if normalize else 'd'
-    thresh = cm.max() / 2.
-    for i, j in itertools.product(range(cm.shape[0]), range(cm.shape[1])):
-        plt.text(j, i, format(cm[i, j], fmt),
-                 horizontalalignment="center",
-                 color="white" if cm[i, j] > thresh else "black")
-
-    plt.tight_layout()
-    plt.ylabel('True label')
-    plt.xlabel('Predicted label')
-
+def break_out_most_frequent_labels_in_y(y, indices):
+    new_array = []
+    for val_array in y:
+        temp_array = []
+        for i, val in enumerate(val_array):
+            if i in indices:
+                temp_array.append(val)
+        new_array.append(temp_array)
+    return np.asarray(new_array)
 
 with open('model_in_json.json','r') as f:
     model_json = json.load(f)
@@ -72,15 +48,44 @@ for i, val in enumerate(y_test[14]):
         print(val)
         print(labels[i])
 
-print(y_test.shape)
-print(prediction.shape)
-prediction = (prediction > 0.2)
+# Compute best threshhold
+#best_score = evaluate_f1(y_test, prediction)
+prediction = prediction > 0.18
 
-matrix = confusion_matrix(y_test.argmax(axis=1), prediction.argmax(axis=1))
+frequency_index = {}
+
+most_frequent_filled = []
+
+for y in y_test:
+    for i, v in enumerate(y):
+        if v == 1:
+            if i in frequency_index:
+                frequency_index[i] = frequency_index[i] + 1
+            else:
+                frequency_index[i] = 1
+
+most_frequent = list(reversed(sorted(frequency_index.items(), key=lambda item: item[1])))[:25]
+
+for index in most_frequent:
+    most_frequent_filled.append(index[0])
+
+most_frequent_indices = most_frequent_filled
+
+matrix_y_test = break_out_most_frequent_labels_in_y(y_test, most_frequent_indices)
+matrix_y_pred = break_out_most_frequent_labels_in_y(prediction, most_frequent_indices)
+matrix_labels = np.asarray([labels[i] for i in most_frequent_indices])
+
+matrix = confusion_matrix(matrix_y_test.argmax(axis=1), matrix_y_pred.argmax(axis=1))
+
+print(matrix.shape)
 
 plt.figure()
-plot_confusion_matrix(matrix, classes=labels,
+plot_confusion_matrix(matrix, classes=matrix_labels,
                       title='Confusion matrix, without normalization')
+
+figManager = plt.get_current_fig_manager()
+figManager.window.showMaximized()
+
 plt.show()
 """
 print(matrix)
